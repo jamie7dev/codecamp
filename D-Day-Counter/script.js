@@ -39,13 +39,15 @@ const counterMaker = function () {
     remainingSec: Math.floor(remaining) % 60,
   };
 
-  const days = document.getElementById("days");
-  const hours = document.getElementById("hours");
-  const min = document.getElementById("min");
-  const sec = document.getElementById("sec");
+  const documentObj = {
+    days: document.getElementById("days"),
+    hours: document.getElementById("hours"),
+    min: document.getElementById("min"),
+    sec: document.getElementById("sec"),
+  };
 
-  days.textContent = remainingObj.remainingDate;
-  hours.textContent = remainingObj.remainingHours;
-  min.textContent = remainingObj.remainingMin;
-  sec.textContent = remainingObj.remainingSec;
+  documentObj["days"].textContent = remainingObj.remainingDate;
+  documentObj["hours"].textContent = remainingObj.remainingHours;
+  documentObj["min"].textContent = remainingObj.remainingMin;
+  documentObj["sec"].textContent = remainingObj.remainingSec;
 };
