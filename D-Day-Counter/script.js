@@ -38,18 +38,24 @@ const counterMaker = function () {
     remainingMin: Math.floor(remaining / 60) % 60,
     remainingSec: Math.floor(remaining) % 60,
   };
-
-  const documentObj = {
-    days: document.getElementById("days"),
-    hours: document.getElementById("hours"),
-    min: document.getElementById("min"),
-    sec: document.getElementById("sec"),
-  };
-
+  const documentArr = ["days", "hours", "min", "sec"];
   const timeKeys = Object.keys(remainingObj);
-  const docKeys = Object.keys(documentObj);
 
-  for (let i = 0; i < timeKeys.length; i++) {
-    documentObj[docKeys[i]].textContent = remainingObj[timeKeys[i]];
+  for (let tag of documentArr) {
+    document.getElementById(tag).textcontent = remainingObj[timeKeys[i]];
+    i++;
   }
+
+  // const documentObj = {
+  //   days: document.getElementById("days"),
+  //   hours: document.getElementById("hours"),
+  //   min: document.getElementById("min"),
+  //   sec: document.getElementById("sec"),
+  // };
+
+  // let i = 0;
+  // for (let key in documentObj) {
+  //   documentObj[key].textContent = remainingObj[timeKeys[i]];
+  //   i++;
+  // }
 };
