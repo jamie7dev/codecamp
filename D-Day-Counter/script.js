@@ -1,5 +1,6 @@
 const messageContainer = document.querySelector("#d-day-message");
 const container = document.querySelector("#d-day-container");
+const savedDate = localStorage.getItem("saved-date");
 const intervalIdArr = [];
 
 container.style.display = "none";
@@ -18,11 +19,9 @@ const dateFormMaker = function () {
 // 표현식은 함수 선언되기 이전에 호출되면 에러 => 주로 이렇게 사용하자
 // 화살표 함수: method 내에서 함수 써야 하는 경우 많이 사용
 
-const counterMaker = function () {
-  const targetDateInput = dateFormMaker();
-
+const counterMaker = function (data) {
   const nowDate = new Date();
-  const targetDate = new Date(targetDateInput).setHours(0, 0, 0, 0); // 자정 기준
+  const targetDate = new Date(data).setHours(0, 0, 0, 0); // 자정 기준
   const remaining = (targetDate - nowDate) / 1000;
 
   if (remaining <= 0) {
@@ -50,26 +49,52 @@ const counterMaker = function () {
   const documentArr = ["days", "hours", "min", "sec"];
   const timeKeys = Object.keys(remainingObj);
 
+  const format = function (time) {
+    // 매개변수 받아서 10초 이하일 때 '09'로 표현
+    if (time < 10) {
+      return "0" + time;
+    } else {
+      return time;
+    }
+  };
+
   let i = 0;
   for (let tag of documentArr) {
-    document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
+    const remainingTime = format(remainingObj[timeKeys[i]]);
+    document.getElementById(tag).textContent = remainingTime;
     i++;
   }
 };
 
-const starter = function () {
+const starter = function (targetDateInput) {
+  if (!targetDateInput) {
+    targetDateInput = dateFormMaker();
+  }
+  localStorage.setItem("saved-date", targetDateInput);
   container.style.display = "flex";
   messageContainer.style.display = "none";
-  counterMaker(); // setInterval은 지정된 시간 이후부터 실행되므로 최초 함수를 실행해야 함
-  const intervalId = setInterval(counterMaker, 1000);
+  setclearInterval();
+  counterMaker(targetDateInput); // setInterval은 지정된 시간 이후부터 실행되므로 최초 함수를 실행해야 함
+  const intervalId = setInterval(() => counterMaker(targetDateInput), 1000);
   intervalIdArr.push(intervalId);
 };
 
 const setclearInterval = function () {
-  container.style.display = "none";
-  messageContainer.innerHTML = "<h3>D-Day를 입력해주세요.</h3>";
-  messageContainer.style.display = "flex";
   for (let i = 0; i < intervalIdArr.length; i++) {
     clearInterval(intervalIdArr[i]);
   }
 };
+
+const resetTimer = function () {
+  container.style.display = "none";
+  messageContainer.innerHTML = "<h3>D-Day를 입력해주세요.</h3>";
+  messageContainer.style.display = "flex";
+  setclearInterval();
+};
+
+if (savedDate) {
+  starter(savedDate);
+} else {
+  container.style.display = "none";
+  messageContainer.innerHTML = "<h3>D-Day를 입력해주세요.</h3>";
+}
