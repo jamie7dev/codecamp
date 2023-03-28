@@ -20,6 +20,10 @@ const dateFormMaker = function () {
 // 화살표 함수: method 내에서 함수 써야 하는 경우 많이 사용
 
 const counterMaker = function (data) {
+  if (data !== savedDate) {
+    localStorage.setItem("saved-date", data);
+  }
+
   const nowDate = new Date();
   const targetDate = new Date(data).setHours(0, 0, 0, 0); // 자정 기준
   const remaining = (targetDate - nowDate) / 1000;
@@ -70,7 +74,7 @@ const starter = function (targetDateInput) {
   if (!targetDateInput) {
     targetDateInput = dateFormMaker();
   }
-  localStorage.setItem("saved-date", targetDateInput);
+
   container.style.display = "flex";
   messageContainer.style.display = "none";
   setclearInterval();
@@ -80,6 +84,7 @@ const starter = function (targetDateInput) {
 };
 
 const setclearInterval = function () {
+  localStorage.removeItem("saved-date");
   for (let i = 0; i < intervalIdArr.length; i++) {
     clearInterval(intervalIdArr[i]);
   }
