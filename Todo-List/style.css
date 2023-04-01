@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.todo-container {
+  max-width: 100%;
+  width: 400px;
+}
+
+#todo-input {
+  background-color: lightsteelblue;
+  border: none;
+  display: block;
+  font-size: 2rem;
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
+  width: 100%;
+}
+
+#todo-list {
+  background-color: lightsteelblue;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#todo-list li {
+  border-top: 1px solid rgb(242, 242, 242);
+  font-size: 1.5rem;
+  user-select: none;
+}
