@@ -58,7 +58,10 @@ const saveItemsFn = function () {
     };
     saveItems.push(todoObj);
   }
-  localStorage.setItem("saved-items", JSON.stringify(saveItems));
+
+  saveItems.length === 0
+    ? localStorage.removeItem("saved-items")
+    : localStorage.setItem("saved-items", JSON.stringify(saveItems));
 };
 
 if (savedTodoList) {
