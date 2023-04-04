@@ -71,8 +71,19 @@ if (savedTodoList) {
 }
 
 const weatherDataActive = function ({ location, weather }) {
+  const weatherMainList = [
+    "Clear",
+    "Clouds",
+    "Drizzle",
+    "Rain",
+    "Snow",
+    "Thunderstorm",
+  ];
+  weather = weatherMainList.includes(weather) ? weather : "Fog";
   const locationNameTag = document.querySelector("#location-name-tag");
   locationNameTag.textContent = location;
+  console.log(weather);
+  document.body.style.backgroundImage = `url('./images/${weather}.jpg')`;
 };
 
 const weatherSearch = function ({ latitude, longitude }) {
